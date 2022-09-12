@@ -1,0 +1,435 @@
+{
+	"info": {
+		"_postman_id": "622a2cf4-0d72-4d12-b0e4-a70601869caf",
+		"name": "irrigation-service-apis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all crops",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/crops",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"crops"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all plots",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/plots",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"plots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all slots",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/slots",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"slots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a crop",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/crops/1001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"crops",
+						"1001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a plot",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/plots/2001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"plots",
+						"2001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a slot",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/slots/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"slots",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a crop",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"PADDY\",\r\n    \"cultivationPeriodDays\": 120,\r\n    \"irrigationGapDays\": 20\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/crops",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"crops"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Configure a crop",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cropId\": 1,\r\n    \"name\": \"PADDY\",\r\n    \"cultivationPeriodDays\": 120,\r\n    \"irrigationGapDays\": 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/crops",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"crops"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a plot",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"PLOT2\",\r\n    \"areaSqrmtr\": 900\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/plots",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"plots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Calculate amount of water for the plot",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"plotId\": 1,\r\n    \"cultivationStartDate\": \"2022-09-12T00:00:00\",\r\n    \"cropId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/plots/water-amount-ltr/2001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"plots",
+						"water-amount-ltr",
+						"2001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Configure a plot",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"plotId\": 1,\r\n    \"cultivationStartDate\": \"2022-09-12T00:00:00\",\r\n    \"cropId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/plots",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"plots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a slot",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"SLOT1\",\r\n    \"startTime\": \"2022-09-12T00:00:00\",\r\n    \"endTime\": \"2022-09-12T00:00:00\",\r\n    \"waterAmountLtr\": 9000,\r\n    \"irrigationStatus\": \"CREATED\",\r\n    \"plotId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/slots",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"slots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Configure a slot",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"slotId\": 1,\r\n    \"name\": \"SLOT2\",\r\n    \"waterAmountLtr\": 10000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/slots",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"slots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a crop",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/crops/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"crops",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a plot",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/plots/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"plots",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a slot",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/irri/api/v1/slots/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"irri",
+						"api",
+						"v1",
+						"slots",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
