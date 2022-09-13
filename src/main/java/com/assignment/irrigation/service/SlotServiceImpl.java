@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.assignment.irrigation.constants.IrrigationStatus;
+import com.assignment.irrigation.exception.ResourceNotFoundException;
 import com.assignment.irrigation.model.Slot;
 import com.assignment.irrigation.repository.SlotRepository;
 
@@ -21,7 +22,11 @@ public class SlotServiceImpl implements SlotService {
 	
 	@Override
 	public Slot getSlot(Long slotId) {
-		return slotRepository.findBySlotId(slotId);
+		Slot slot = slotRepository.findBySlotId(slotId);
+		if(Objects.isNull(slot)) {
+			throw new ResourceNotFoundException("id:" + slotId);
+		}
+		return slot;
 	}
 
 	@Override
@@ -37,6 +42,8 @@ public class SlotServiceImpl implements SlotService {
 		Slot persistedSlot = slotRepository.findBySlotId(slot.getSlotId());
 		if(Objects.nonNull(persistedSlot)) {
 			persistedSlot = updatePersistedSlot(persistedSlot, slot);
+		} else {
+			throw new ResourceNotFoundException("id:" + slot.getSlotId());
 		}
 		return persistedSlot;
 	}
@@ -53,6 +60,7 @@ public class SlotServiceImpl implements SlotService {
 			slotRepository.delete(persistedSlot);
 		}else {
 			log.info("Slot with id {} does not exist.", slotId);
+			throw new ResourceNotFoundException("id:" + slotId);
 		}
 	}
 	

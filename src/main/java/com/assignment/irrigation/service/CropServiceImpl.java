@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.assignment.irrigation.exception.ResourceNotFoundException;
 import com.assignment.irrigation.model.Crop;
 import com.assignment.irrigation.repository.CropRepository;
 
@@ -20,7 +21,11 @@ public class CropServiceImpl implements CropService {
 	
 	@Override
 	public Crop getCrop(Long cropId) {
-		return cropRepository.findByCropId(cropId);
+		Crop crop = cropRepository.findByCropId(cropId);
+		if(Objects.isNull(crop)) {
+			throw new ResourceNotFoundException("id:" + cropId);
+		}
+		return crop;
 	}
 
 	@Override
@@ -35,6 +40,8 @@ public class CropServiceImpl implements CropService {
 		Crop persistedCrop = cropRepository.findByCropId(crop.getCropId());
 		if(Objects.nonNull(persistedCrop)) {
 			persistedCrop = updatePersistedCrop(persistedCrop, crop);
+		}else {
+			throw new ResourceNotFoundException("id:" + crop.getCropId());
 		}
 		return cropRepository.save(persistedCrop);
 	}
@@ -51,6 +58,7 @@ public class CropServiceImpl implements CropService {
 			cropRepository.delete(persistedCrop);
 		}else {
 			log.info("Crop with id {} does not exist.", cropId);
+			throw new ResourceNotFoundException("id:" + cropId);
 		}
 	}
 	

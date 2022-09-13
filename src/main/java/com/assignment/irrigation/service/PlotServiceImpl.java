@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.assignment.irrigation.exception.ResourceNotFoundException;
 import com.assignment.irrigation.model.Plot;
 import com.assignment.irrigation.repository.PlotRepository;
 
@@ -24,7 +25,11 @@ public class PlotServiceImpl implements PlotService {
 	
 	@Override
 	public Plot getPlot(Long plotId) {
-		return plotRepository.findByPlotId(plotId);
+		Plot plot = plotRepository.findByPlotId(plotId);
+		if(Objects.isNull(plot)) {
+			throw new ResourceNotFoundException("id:" + plotId);
+		}
+		return plot;
 	}
 
 	@Override
@@ -39,6 +44,8 @@ public class PlotServiceImpl implements PlotService {
 		Plot persistedPlot = plotRepository.findByPlotId(plot.getPlotId());
 		if(Objects.nonNull(persistedPlot)) {
 			persistedPlot = updatePersistedPlot(persistedPlot, plot);
+		}else {
+			throw new ResourceNotFoundException("id:" + plot.getPlotId());
 		}
 		return plotRepository.save(persistedPlot);
 	}
@@ -55,6 +62,7 @@ public class PlotServiceImpl implements PlotService {
 			plotRepository.delete(persistedPlot);
 		}else {
 			log.info("Plot with id {} does not exist.", plotId);
+			throw new ResourceNotFoundException("id:" + plotId);
 		}
 	}
 
