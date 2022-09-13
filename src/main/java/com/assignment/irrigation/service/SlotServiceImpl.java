@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.assignment.irrigation.constants.IrrigationStatus;
 import com.assignment.irrigation.model.Slot;
 import com.assignment.irrigation.repository.SlotRepository;
 
@@ -22,6 +23,7 @@ public class SlotServiceImpl implements SlotService {
 
 	@Override
 	public Slot saveSlot(Slot slot) {
+		slot.setIrrigationStatus(IrrigationStatus.getIrrigationStatus(slot.getIrrigationStatus()));
 		return slotRepository.save(slot);
 	}
 
@@ -61,13 +63,12 @@ public class SlotServiceImpl implements SlotService {
 			persistedSlot.setWaterAmountLtr(newSlot.getWaterAmountLtr());
 		}
 		if(Objects.nonNull(newSlot.getIrrigationStatus())) {
-			persistedSlot.setIrrigationStatus(newSlot.getIrrigationStatus());
+			persistedSlot.setIrrigationStatus(IrrigationStatus.getIrrigationStatus(newSlot.getIrrigationStatus()));
 		}
 		if(Objects.nonNull(newSlot.getPlotId())) {
 			persistedSlot.setPlotId(newSlot.getPlotId());
 		}
 		return persistedSlot;
 	}
-
 
 }
