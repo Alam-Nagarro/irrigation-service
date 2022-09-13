@@ -10,6 +10,9 @@ import com.assignment.irrigation.constants.IrrigationStatus;
 import com.assignment.irrigation.model.Slot;
 import com.assignment.irrigation.repository.SlotRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class SlotServiceImpl implements SlotService {
 
@@ -23,12 +26,14 @@ public class SlotServiceImpl implements SlotService {
 
 	@Override
 	public Slot saveSlot(Slot slot) {
+		log.debug("Received slot to save: " + slot);
 		slot.setIrrigationStatus(IrrigationStatus.getIrrigationStatus(slot.getIrrigationStatus()));
 		return slotRepository.save(slot);
 	}
 
 	@Override
 	public Slot updateSlot(Slot slot) {
+		log.debug("Received slot to update: " + slot);
 		Slot persistedSlot = slotRepository.findBySlotId(slot.getSlotId());
 		if(Objects.nonNull(persistedSlot)) {
 			persistedSlot = updatePersistedSlot(persistedSlot, slot);
@@ -46,6 +51,8 @@ public class SlotServiceImpl implements SlotService {
 		Slot persistedSlot = slotRepository.findBySlotId(slotId);
 		if(Objects.nonNull(persistedSlot)) {
 			slotRepository.delete(persistedSlot);
+		}else {
+			log.info("Slot with id {} does not exist.", slotId);
 		}
 	}
 	

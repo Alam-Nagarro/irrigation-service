@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import com.assignment.irrigation.model.Plot;
 import com.assignment.irrigation.repository.PlotRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class PlotServiceImpl implements PlotService {
 
@@ -26,11 +29,13 @@ public class PlotServiceImpl implements PlotService {
 
 	@Override
 	public Plot savePlot(Plot plot) {
+		log.debug("Received plot to save: " + plot);
 		return plotRepository.save(plot);
 	}
 
 	@Override
 	public Plot updatePlot(Plot plot) {
+		log.debug("Received plot to update: " + plot);
 		Plot persistedPlot = plotRepository.findByPlotId(plot.getPlotId());
 		if(Objects.nonNull(persistedPlot)) {
 			persistedPlot = updatePersistedPlot(persistedPlot, plot);
@@ -48,6 +53,8 @@ public class PlotServiceImpl implements PlotService {
 		Plot persistedPlot = plotRepository.findByPlotId(plotId);
 		if(Objects.nonNull(persistedPlot)) {
 			plotRepository.delete(persistedPlot);
+		}else {
+			log.info("Plot with id {} does not exist.", plotId);
 		}
 	}
 

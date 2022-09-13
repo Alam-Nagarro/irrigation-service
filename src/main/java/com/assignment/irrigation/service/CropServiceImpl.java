@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import com.assignment.irrigation.model.Crop;
 import com.assignment.irrigation.repository.CropRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class CropServiceImpl implements CropService {
 	 
@@ -22,11 +25,13 @@ public class CropServiceImpl implements CropService {
 
 	@Override
 	public Crop saveCrop(Crop crop) {
+		log.debug("Received crop to save: " + crop);
 		return cropRepository.save(crop);
 	}
 
 	@Override
 	public Crop updateCrop(Crop crop) {
+		log.debug("Received crop to update: " + crop);
 		Crop persistedCrop = cropRepository.findByCropId(crop.getCropId());
 		if(Objects.nonNull(persistedCrop)) {
 			persistedCrop = updatePersistedCrop(persistedCrop, crop);
@@ -44,6 +49,8 @@ public class CropServiceImpl implements CropService {
 		Crop persistedCrop = cropRepository.findByCropId(cropId);	
 		if(Objects.nonNull(persistedCrop)) {
 			cropRepository.delete(persistedCrop);
+		}else {
+			log.info("Crop with id {} does not exist.", cropId);
 		}
 	}
 	
