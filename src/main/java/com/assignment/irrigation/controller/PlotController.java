@@ -5,6 +5,7 @@ import static com.assignment.irrigation.constants.IrrigationConstants.IRRI_API_V
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,18 +26,21 @@ public class PlotController {
 	PlotService plotService;
 	
 	@GetMapping("/{plotId}")
-	public Plot getPlot(@PathVariable Long plotId) {
-		return plotService.getPlot(plotId);
+	public ResponseEntity<Plot> getPlot(@PathVariable Long plotId) {
+		Plot plot = plotService.getPlot(plotId);
+		return ResponseEntity.ok(plot);
 	}
 	
 	@PostMapping
-	public Plot createPlot(@RequestBody Plot plot) {
-		return plotService.savePlot(plot);
+	public ResponseEntity<Plot> createPlot(@RequestBody Plot plot) {
+		Plot savedPlot = plotService.savePlot(plot);
+		return ResponseEntity.created(null).body(savedPlot);
 	}
 	
 	@PutMapping
-	public Plot updatePlot(@RequestBody Plot plot) {
-		return plotService.updatePlot(plot);
+	public ResponseEntity<Plot> updatePlot(@RequestBody Plot plot) {
+		Plot updatedPlot = plotService.updatePlot(plot);
+		return ResponseEntity.ok(updatedPlot);
 	}
 	
 	@GetMapping

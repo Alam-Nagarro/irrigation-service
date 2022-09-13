@@ -5,6 +5,8 @@ import static com.assignment.irrigation.constants.IrrigationConstants.IRRI_API_V
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,18 +27,21 @@ public class CropController {
 	CropService cropService;
 	
 	@GetMapping("/{cropId}")
-	public Crop getCrop(@PathVariable Long cropId) {
-		return cropService.getCrop(cropId);
+	public ResponseEntity<Crop> getCrop(@PathVariable Long cropId) {
+		Crop crop = cropService.getCrop(cropId);
+		return ResponseEntity.ok(crop);
 	}
 	
 	@PostMapping
-	public Crop createCrop(@RequestBody Crop crop) {
-		return cropService.saveCrop(crop);
+	public ResponseEntity<Crop> createCrop(@RequestBody Crop crop) {
+		Crop savedCrop = cropService.saveCrop(crop);
+		return ResponseEntity.created(null).body(savedCrop);
 	}
 	
 	@PutMapping
-	public Crop updateCrop(@RequestBody Crop crop) {
-		return cropService.updateCrop(crop);
+	public ResponseEntity<Crop> updateCrop(@RequestBody Crop crop) {
+		Crop updatedCrop = cropService.updateCrop(crop);
+		return ResponseEntity.ok(updatedCrop);
 	}
 	
 	@GetMapping

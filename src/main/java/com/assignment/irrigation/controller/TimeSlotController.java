@@ -5,6 +5,7 @@ import static com.assignment.irrigation.constants.IrrigationConstants.IRRI_API_V
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,18 +26,21 @@ public class TimeSlotController {
 	SlotService slotService;
 	
 	@GetMapping("/{slotId}")
-	public Slot getSlot(@PathVariable Long slotId) {
-		return slotService.getSlot(slotId);
+	public ResponseEntity<Slot> getSlot(@PathVariable Long slotId) {
+		Slot slot = slotService.getSlot(slotId);
+		return ResponseEntity.ok(slot);
 	}
 	
 	@PostMapping
-	public Slot createSlot(@RequestBody Slot slot) {
-		return slotService.saveSlot(slot);
+	public ResponseEntity<Slot> createSlot(@RequestBody Slot slot) {
+		Slot savedSlot = slotService.saveSlot(slot);
+		return ResponseEntity.created(null).body(savedSlot);
 	}
 	
 	@PutMapping
-	public Slot updateSlot(@RequestBody Slot slot) {
-		return slotService.updateSlot(slot);
+	public ResponseEntity<Slot> updateSlot(@RequestBody Slot slot) {
+		Slot updatedSlot = slotService.updateSlot(slot);
+		return ResponseEntity.ok(updatedSlot);
 	}
 	
 	@GetMapping
